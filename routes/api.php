@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 Route::post('register', 'Api\Auth\RegisterController@register');
 Route::post('login', 'Api\Auth\LoginController@login');
 
+Route::get('obetenerOfertas','AppMovil\ObtenerImagenOfertasController@obtenerOfertas');
+
 
 Route::middleware('auth:api')->group(function () {
     Route::post('registerWorks', 'TrabajadoresController@create');
