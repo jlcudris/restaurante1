@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Pedido;
+use App\Modelos\Pedido;
 
 class PedidoController extends Controller
 {

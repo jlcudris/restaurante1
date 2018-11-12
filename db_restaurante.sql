@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-11-2018 a las 00:56:56
+-- Tiempo de generación: 12-11-2018 a las 03:15:14
 -- Versión del servidor: 5.7.23-0ubuntu0.18.04.1
 -- Versión de PHP: 7.2.9-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -257,19 +257,13 @@ CREATE TABLE `oferta_dia` (
   `id_promociones` int(11) NOT NULL,
   `nombre_promocion` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `valor_promocion` decimal(6,3) NOT NULL,
-  `imagen` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `rutaimagen` varchar(150) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'noimagen',
   `descripcion_pro` varchar(520) COLLATE utf8_unicode_ci NOT NULL,
-  `fecha_promo` date NOT NULL,
-  `fin_fecha_promo` date NOT NULL
+  `fecha_creacion` date DEFAULT NULL,
+  `fecha_promo` date DEFAULT NULL,
+  `fin_fecha_promo` date DEFAULT NULL,
+  `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `oferta_dia`
---
-
-INSERT INTO `oferta_dia` (`id_promociones`, `nombre_promocion`, `valor_promocion`, `imagen`, `descripcion_pro`, `fecha_promo`, `fin_fecha_promo`) VALUES
-(1, 'kjh', '100.000', '8gfh', '9789', '2018-11-06', '2018-11-12'),
-(2, 'gdfg', '300.000', 'ljkl', 'jkljk', '2018-11-14', '2018-11-07');
 
 -- --------------------------------------------------------
 

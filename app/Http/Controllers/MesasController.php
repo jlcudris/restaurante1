@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Mesa;
+use App\Modelos\Mesa;
 
 class MesasController extends Controller
 {

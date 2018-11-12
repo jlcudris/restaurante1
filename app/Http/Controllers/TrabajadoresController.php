@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Trabajador;
+use App\Modelos\Trabajador;
 
 
 class TrabajadoresController extends Controller

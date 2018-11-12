@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\UserCargo;
+use App\Modelos\UserCargo;
 
 class UserCargoController extends Controller
 {
