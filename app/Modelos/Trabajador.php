@@ -10,7 +10,7 @@ class Trabajador extends Model
     protected $primaryKey = 'id_trabajador';
 
     protected $fillable = [
-        'nombre', 'apellido_paterno', 'apellido_materno', 'cedula', 'sexo', 'correo', 'telefono'
+        'nombre', 'apellido_paterno', 'apellido_materno', 'cedula', 'sexo', 'correo', 'telefono',
     ];
 
 }
