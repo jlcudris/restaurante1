@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 12-11-2018 a las 03:15:14
--- Versión del servidor: 5.7.23-0ubuntu0.18.04.1
--- Versión de PHP: 7.2.9-1+ubuntu18.04.1+deb.sury.org+1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 19-11-2018 a las 03:00:28
+-- Versión del servidor: 10.1.26-MariaDB
+-- Versión de PHP: 7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -45,7 +45,9 @@ CREATE TABLE `cargo` (
   `id_cargo` int(11) NOT NULL,
   `nombre` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `sueldo` int(11) NOT NULL,
-  `descripcion` varchar(502) COLLATE utf8_unicode_ci NOT NULL
+  `descripcion` varchar(502) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -111,15 +113,17 @@ CREATE TABLE `factura` (
 CREATE TABLE `mesas` (
   `id` int(11) NOT NULL,
   `num_mesa` int(11) NOT NULL,
-  `tipo_mesa` int(11) NOT NULL
+  `tipo_mesa` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `mesas`
 --
 
-INSERT INTO `mesas` (`id`, `num_mesa`, `tipo_mesa`) VALUES
-(1, 2, 1);
+INSERT INTO `mesas` (`id`, `num_mesa`, `tipo_mesa`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, '2018-11-18 20:58:06', '2018-11-18 20:58:06');
 
 -- --------------------------------------------------------
 
@@ -169,6 +173,7 @@ CREATE TABLE `oauth_access_tokens` (
 --
 
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('384e997d74fbe8a8f3e2093e2c546787d6ff411ef9e432a81f466ced9f6630211ed04e4aeb1d4a1c', 2, 2, NULL, '[\"*\"]', 0, '2018-11-19 06:00:13', '2018-11-19 06:00:13', '2019-11-19 01:00:13'),
 ('78f4fd3d179d0789bd69951c4613cfc9fff89b9566fdb1c5d6eee4d581e1a386fb790dd63fb4f3d6', 1, 1, NULL, '[\"*\"]', 0, '2018-11-11 22:55:49', '2018-11-11 22:55:49', '2019-11-11 22:55:49'),
 ('8a4a181d59362851ac31e7b167799ef31d6dd33d8c0ba2fec977d3c8b370c7d6516c906adae3b5da', 1, 1, NULL, '[\"*\"]', 0, '2018-11-11 23:00:25', '2018-11-11 23:00:25', '2019-11-11 23:00:25');
 
@@ -211,7 +216,7 @@ CREATE TABLE `oauth_clients` (
 --
 
 INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'restaurante', 'LdETGrkYFWkvFYvh38FiYaCcDOG9le26A7OSOXHQ', 'http://localhost', 0, 1, 0, '2018-11-11 22:49:32', '2018-11-11 22:49:32');
+(2, NULL, 'Laravel Password Grant Client', '7nMyL4SGVZmTPrAgCbY3dHQM97rsMHsM5W6F2u8e', 'http://localhost', 0, 1, 0, '2018-11-19 05:56:49', '2018-11-19 05:56:49');
 
 -- --------------------------------------------------------
 
@@ -244,6 +249,7 @@ CREATE TABLE `oauth_refresh_tokens` (
 --
 
 INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires_at`) VALUES
+('4a82c18b134a004594921d115634eb8b32943178bbc0e669d1dee060ebcdb943a11a86f77a019774', '384e997d74fbe8a8f3e2093e2c546787d6ff411ef9e432a81f466ced9f6630211ed04e4aeb1d4a1c', 0, '2019-11-19 01:00:13'),
 ('50e0e2aaf3a6df639371b963f62f80a54cde70ffe2f74b38671568bad6610f0b2e4c3b0cd92f1d8e', '8a4a181d59362851ac31e7b167799ef31d6dd33d8c0ba2fec977d3c8b370c7d6516c906adae3b5da', 0, '2019-11-11 23:00:25'),
 ('f9477a65597cb430d6f97631bcadef6a8dfacfc8f465bb8f797df181dd621272621919135bb2f529', '78f4fd3d179d0789bd69951c4613cfc9fff89b9566fdb1c5d6eee4d581e1a386fb790dd63fb4f3d6', 0, '2019-11-11 22:55:49');
 
@@ -289,7 +295,9 @@ CREATE TABLE `pedido` (
   `id_mesa` int(11) NOT NULL,
   `fecha_pedido` date NOT NULL,
   `hora_pedido` time NOT NULL,
-  `estado` varchar(15) COLLATE utf8_unicode_ci NOT NULL
+  `estado` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -373,16 +381,19 @@ CREATE TABLE `trabajadores` (
   `apellido_materno` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `cedula` int(11) NOT NULL,
   `sexo` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `correo` int(11) NOT NULL,
-  `telefono` int(11) NOT NULL
+  `correo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `telefono` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `trabajadores`
 --
 
-INSERT INTO `trabajadores` (`id_trabajador`, `nombre`, `apellido_paterno`, `apellido_materno`, `cedula`, `sexo`, `correo`, `telefono`) VALUES
-(1, 'prueba', 'pruebita', 'prubo', 111, 'm', 4544, 4422);
+INSERT INTO `trabajadores` (`id_trabajador`, `nombre`, `apellido_paterno`, `apellido_materno`, `cedula`, `sexo`, `correo`, `telefono`, `created_at`, `updated_at`) VALUES
+(1, 'prueba', 'pruebita', 'prubo', 111, 'm', '4544', '4422', '2018-11-18 20:05:33', '2018-11-18 20:05:33'),
+(2, 'ronaldo', 'camacho', 'meza', 1007730321, 'm', 'ronaldo@mail.com', '3045907407', '2018-11-19 01:05:39', '2018-11-19 01:05:39');
 
 -- --------------------------------------------------------
 
@@ -426,7 +437,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'jhona', 'jhona@gmail.com', NULL, '$2y$10$gSm0RM6cLi6mTc754.pc1.wv3wf7JFU/RZs5J/T/mlxFnIZJs3KJu', NULL, '2018-11-11 22:55:46', '2018-11-11 22:55:46');
+(2, 'Ronaldo', 'ronaldo@mail.com', NULL, '$2y$10$X2iIoaG9PN.JdejhqujrqO3RrGVUiRzhb0KeDaFzevqeQh4HS02kq', NULL, '2018-11-19 05:58:27', '2018-11-19 05:58:27');
 
 -- --------------------------------------------------------
 
@@ -438,7 +449,9 @@ CREATE TABLE `user_cargo` (
   `id_user_cargo` int(11) NOT NULL,
   `id_trabajador` int(11) NOT NULL,
   `id_cargo` int(11) NOT NULL,
-  `observaciones` varchar(300) COLLATE utf8_unicode_ci NOT NULL
+  `observaciones` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -641,127 +654,106 @@ ALTER TABLE `user_turnos`
 --
 ALTER TABLE `bebida`
   MODIFY `id_bebida` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
   MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `cocinero_plato`
 --
 ALTER TABLE `cocinero_plato`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `detallespedidos_bebidas`
 --
 ALTER TABLE `detallespedidos_bebidas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `detallespedidos_platos`
 --
 ALTER TABLE `detallespedidos_platos`
   MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
   MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT de la tabla `oauth_clients`
 --
 ALTER TABLE `oauth_clients`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `oauth_personal_access_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `oferta_dia`
 --
 ALTER TABLE `oferta_dia`
   MODIFY `id_promociones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
   MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `pedido_oferta`
 --
 ALTER TABLE `pedido_oferta`
   MODIFY `id_pedido_oferta` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `platos`
 --
 ALTER TABLE `platos`
   MODIFY `id_plato` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `tipo_bebidas`
 --
 ALTER TABLE `tipo_bebidas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `tipo_platos`
 --
 ALTER TABLE `tipo_platos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `trabajadores`
 --
 ALTER TABLE `trabajadores`
-  MODIFY `id_trabajador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `id_trabajador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `turno`
 --
 ALTER TABLE `turno`
   MODIFY `id_turno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `user_cargo`
 --
 ALTER TABLE `user_cargo`
   MODIFY `id_user_cargo` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `user_turnos`
 --
 ALTER TABLE `user_turnos`
   MODIFY `id_user_turnos` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- Restricciones para tablas volcadas
 --
