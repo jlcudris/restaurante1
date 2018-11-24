@@ -23,9 +23,10 @@ Route::post('RegistrarPedidos','AppMovil\ObtenerPedidosController@obtenerPedidos
 
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('registerWorks', 'TrabajadoresController@create');
-    Route::post('crearCargo', 'CargoController@create');
-    Route::post('CargoUsuario', 'UserCargoController@create');
-    Route::post('pedido', 'PedidoController@create');
-    Route::post('mesas', 'MesasController@create');
+    Route::post('registerWorks', 'Admin\TrabajadoresController@create');
+    Route::post('crearCargo', 'Admin\CargoController@create');
+    Route::post('CargoUsuario', 'Admin\UserCargoController@create');
+    Route::post('pedido', 'Admin\PedidoController@create');
+    Route::post('mesas', 'Admin\MesasController@create');
+    Route::get('mostrarPedidos', 'Admin\MostrarPedidoController@index');
 });
