@@ -10,6 +10,6 @@ class Pedido extends Model
     protected $primaryKey = 'id_pedido';
 
     protected $fillable = [
-        'nombre_cliente', 'id_trabajador', 'id_mesa', 'fecha_pedido', 'estado'
+        'nombre_cliente', 'id_mesa', 'fecha_pedido', 'estado'
     ];
 }

@@ -12,7 +12,6 @@ class PedidoController extends Controller
 
         $validator=\Validator::make($request->all(),[
             'nombre_cliente' => 'required',
-            'id_trabajador' => 'required',
             'id_mesa' => 'required',
             'fecha_pedido' => 'required',
             'estado' => 'required'
@@ -25,7 +24,6 @@ class PedidoController extends Controller
         }else{
         $cargo = Pedido::create([
             'nombre_cliente' => request('nombre_cliente'),
-            'id_trabajador' => request('id_trabajador'),
             'id_mesa' => request('id_mesa'),
             'fecha_pedido' => request('fecha_pedido'),
             'estado' => request('estado'),
