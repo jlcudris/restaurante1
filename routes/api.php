@@ -17,6 +17,9 @@ Route::post('register', 'Api\Auth\RegisterController@register');
 Route::post('login', 'Api\Auth\LoginController@login');
 
 Route::get('obetenerOfertas','AppMovil\ObtenerImagenOfertasController@obtenerOfertas');
+Route::get('obetenerPlatos/{id}','AppMovil\ObtenerImagenOfertasController@obtenerTipoPlatos');
+Route::post('RegistrarPedidos','AppMovil\ObtenerPedidosController@obtenerPedidos');
+
 
 
 Route::middleware('auth:api')->group(function () {

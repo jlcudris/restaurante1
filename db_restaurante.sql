@@ -2,10 +2,10 @@
 -- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 12-11-2018 a las 03:15:14
--- Versión del servidor: 5.7.23-0ubuntu0.18.04.1
--- Versión de PHP: 7.2.9-1+ubuntu18.04.1+deb.sury.org+1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 24-11-2018 a las 17:41:30
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,19 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `db_restaurante`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `bebida`
---
-
-CREATE TABLE `bebida` (
-  `id_bebida` int(11) NOT NULL,
-  `id_tipo_bebida` int(11) NOT NULL,
-  `nombre` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
-  `precio` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -63,20 +50,6 @@ CREATE TABLE `cocinero_plato` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detallespedidos_bebidas`
---
-
-CREATE TABLE `detallespedidos_bebidas` (
-  `id` int(11) NOT NULL,
-  `id_pedido` int(11) NOT NULL,
-  `id_bebida` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `observaciones` varchar(502) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `detallespedidos_platos`
 --
 
@@ -84,9 +57,16 @@ CREATE TABLE `detallespedidos_platos` (
   `id_` int(11) NOT NULL,
   `id_pedido` int(11) NOT NULL,
   `id_plato` int(11) NOT NULL,
-  `observaciones` varchar(502) COLLATE utf8_unicode_ci NOT NULL,
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `detallespedidos_platos`
+--
+
+INSERT INTO `detallespedidos_platos` (`id_`, `id_pedido`, `id_plato`, `cantidad`) VALUES
+(7, 5, 1, 2),
+(8, 5, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -265,6 +245,13 @@ CREATE TABLE `oferta_dia` (
   `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `oferta_dia`
+--
+
+INSERT INTO `oferta_dia` (`id_promociones`, `nombre_promocion`, `valor_promocion`, `rutaimagen`, `descripcion_pro`, `fecha_creacion`, `fecha_promo`, `fin_fecha_promo`, `estado`) VALUES
+(3, 'caritas felices', '100.000', 'caritas.jpg', 'una para y torte para mi', '2018-11-13', '2018-11-06', '2018-11-28', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -285,12 +272,19 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `pedido` (
   `id_pedido` int(11) NOT NULL,
-  `nombre_cliente` int(11) NOT NULL,
+  `nombre_cliente` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `id_mesa` int(11) NOT NULL,
   `fecha_pedido` date NOT NULL,
   `hora_pedido` time NOT NULL,
   `estado` varchar(15) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`id_pedido`, `nombre_cliente`, `id_mesa`, `fecha_pedido`, `hora_pedido`, `estado`) VALUES
+(5, 'pepe', 1, '2018-11-24', '11:34:44', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -319,27 +313,17 @@ CREATE TABLE `platos` (
   `id_tipo_plato` int(11) NOT NULL,
   `nombre` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
   `precio` int(11) NOT NULL,
-  `descripcion` varchar(502) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_bebidas`
---
-
-CREATE TABLE `tipo_bebidas` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `imagenplato` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'noimagen',
   `descripcion` varchar(502) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `tipo_bebidas`
+-- Volcado de datos para la tabla `platos`
 --
 
-INSERT INTO `tipo_bebidas` (`id`, `nombre`, `descripcion`) VALUES
-(1, 'trago', 'bebida que emborracha');
+INSERT INTO `platos` (`id_plato`, `id_tipo_plato`, `nombre`, `precio`, `imagenplato`, `descripcion`) VALUES
+(1, 2, 'pizza champiñon', 10000, 'pizzachampiñon.jpg', 'las pizza tiene piña jamon y salsa agridulce con queso mozarela'),
+(2, 1, 'sopa lenteja', 1000, 'sopa.jpg', 'las sopas ricas');
 
 -- --------------------------------------------------------
 
@@ -358,7 +342,8 @@ CREATE TABLE `tipo_platos` (
 --
 
 INSERT INTO `tipo_platos` (`id`, `nombre`, `descripcion`) VALUES
-(1, 'hgh', 'jgj');
+(1, 'hgh', 'jgj'),
+(2, 'pizzas', 'las pizzas mas ricas del mundo');
 
 -- --------------------------------------------------------
 
@@ -458,13 +443,6 @@ CREATE TABLE `user_turnos` (
 --
 
 --
--- Indices de la tabla `bebida`
---
-ALTER TABLE `bebida`
-  ADD PRIMARY KEY (`id_bebida`),
-  ADD KEY `id_tipo_bebida` (`id_tipo_bebida`);
-
---
 -- Indices de la tabla `cargo`
 --
 ALTER TABLE `cargo`
@@ -477,14 +455,6 @@ ALTER TABLE `cocinero_plato`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_cocinero` (`id_cocinero`),
   ADD KEY `id_plato` (`id_plato`);
-
---
--- Indices de la tabla `detallespedidos_bebidas`
---
-ALTER TABLE `detallespedidos_bebidas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_bebida` (`id_bebida`),
-  ADD KEY `id_pedido` (`id_pedido`);
 
 --
 -- Indices de la tabla `detallespedidos_platos`
@@ -585,12 +555,6 @@ ALTER TABLE `platos`
   ADD KEY `id_tipo_plato` (`id_tipo_plato`);
 
 --
--- Indices de la tabla `tipo_bebidas`
---
-ALTER TABLE `tipo_bebidas`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `tipo_platos`
 --
 ALTER TABLE `tipo_platos`
@@ -637,12 +601,6 @@ ALTER TABLE `user_turnos`
 --
 
 --
--- AUTO_INCREMENT de la tabla `bebida`
---
-ALTER TABLE `bebida`
-  MODIFY `id_bebida` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
@@ -655,16 +613,10 @@ ALTER TABLE `cocinero_plato`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `detallespedidos_bebidas`
---
-ALTER TABLE `detallespedidos_bebidas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `detallespedidos_platos`
 --
 ALTER TABLE `detallespedidos_platos`
-  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
@@ -700,13 +652,13 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT de la tabla `oferta_dia`
 --
 ALTER TABLE `oferta_dia`
-  MODIFY `id_promociones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_promociones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido_oferta`
@@ -718,19 +670,13 @@ ALTER TABLE `pedido_oferta`
 -- AUTO_INCREMENT de la tabla `platos`
 --
 ALTER TABLE `platos`
-  MODIFY `id_plato` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `tipo_bebidas`
---
-ALTER TABLE `tipo_bebidas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_plato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_platos`
 --
 ALTER TABLE `tipo_platos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `trabajadores`
@@ -767,24 +713,11 @@ ALTER TABLE `user_turnos`
 --
 
 --
--- Filtros para la tabla `bebida`
---
-ALTER TABLE `bebida`
-  ADD CONSTRAINT `bebida_ibfk_1` FOREIGN KEY (`id_tipo_bebida`) REFERENCES `tipo_bebidas` (`id`);
-
---
 -- Filtros para la tabla `cocinero_plato`
 --
 ALTER TABLE `cocinero_plato`
   ADD CONSTRAINT `cocinero_plato_ibfk_1` FOREIGN KEY (`id_cocinero`) REFERENCES `user_cargo` (`id_user_cargo`),
   ADD CONSTRAINT `cocinero_plato_ibfk_2` FOREIGN KEY (`id_plato`) REFERENCES `platos` (`id_plato`);
-
---
--- Filtros para la tabla `detallespedidos_bebidas`
---
-ALTER TABLE `detallespedidos_bebidas`
-  ADD CONSTRAINT `detallespedidos_bebidas_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`),
-  ADD CONSTRAINT `detallespedidos_bebidas_ibfk_2` FOREIGN KEY (`id_bebida`) REFERENCES `bebida` (`id_bebida`);
 
 --
 -- Filtros para la tabla `detallespedidos_platos`
