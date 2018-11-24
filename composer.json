@@ -9,7 +9,8 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "nesbot/carbon": "~1.14"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -35,8 +36,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {
@@ -56,6 +56,7 @@
         "sort-packages": true,
         "optimize-autoloader": true
     },
+
     "minimum-stability": "dev",
     "prefer-stable": true
 }
