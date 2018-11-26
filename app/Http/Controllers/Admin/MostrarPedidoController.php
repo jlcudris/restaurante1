@@ -13,21 +13,22 @@ class MostrarPedidoController extends Controller
         //iterar todos los pedidos que estan pendiente y listarlos por fecha 
         $pedidos = DB::table('pedido as pe')
         ->where('pe.estado','pendiente')
+        ->join('mesas as me', 'pe.id_mesa','me.id')
         ->where('pe.fecha_pedido',date('Y-m-d'))
+        ->orderBy('pe.hora_pedido', 'asc')
         ->get();
 
 
         $pedidos_arr = array();
         foreach($pedidos as $pedido){
             $lista_pedido = DB::table('detallespedidos_platos as dp')
-            ->select('pl.nombre', 'pl.imagenplato', 'pe.nombre_cliente', 'me.num_mesa', 'pe.fecha_pedido', 'pe.hora_pedido', 'pe.estado')
+            ->select('pl.nombre', 'pl.imagenplato', 'pe.nombre_cliente', 'pe.fecha_pedido', 'pe.hora_pedido', 'pe.estado', 'dp.cantidad')
             ->join('platos as pl', 'dp.id_plato','pl.id_plato')
             ->join('pedido as pe', 'dp.id_pedido','pe.id_pedido')
-            ->join('mesas as me', 'pe.id_mesa','me.id')
             ->where('dp.id_pedido',$pedido->id_pedido)
             ->get();
 
-            $pedidos_arr = array_add($pedidos_arr, $pedido->id_mesa, $lista_pedido);
+            $pedidos_arr = array_add($pedidos_arr, 'mesa '.$pedido->num_mesa, $lista_pedido);
         }
         
         return response()->json($pedidos_arr);

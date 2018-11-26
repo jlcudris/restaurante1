@@ -29,9 +29,12 @@ class RegisterController extends Controller
     
             $validator=\Validator::make($request->all(),[
                 'name' => 'required',
+                'apellido_paterno' => 'required',
+                'cedula' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:6',
-    
+                'telefono' => 'required',
+                'cargo' => 'required',
             ]);
     
             if($validator->fails())
