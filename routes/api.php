@@ -13,20 +13,28 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('register', 'Api\Auth\RegisterController@register');
 Route::post('login', 'Api\Auth\LoginController@login');
 
 Route::get('obetenerOfertas','AppMovil\ObtenerImagenOfertasController@obtenerOfertas');
 Route::get('obetenerPlatos/{id}','AppMovil\ObtenerImagenOfertasController@obtenerTipoPlatos');
 Route::post('RegistrarPedidos','AppMovil\ObtenerPedidosController@obtenerPedidos');
 
-
-
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['auth:api', 'admin'])->group(function () {
+    Route::post('register', 'Api\Auth\RegisterController@register');
     Route::post('registerWorks', 'Admin\TrabajadoresController@create');
     Route::post('crearCargo', 'Admin\CargoController@create');
-    Route::post('CargoUsuario', 'Admin\UserCargoController@create');
-    Route::post('pedido', 'Admin\PedidoController@create');
     Route::post('mesas', 'Admin\MesasController@create');
+    Route::post('plato', 'Admin\PlatosController@create_plato');
+    Route::post('tipo_plato', 'Admin\PlatosController@create_tipo_plato');
+    Route::post('logout', 'Api\Auth\LoginController@logout');
+    Route::post('CargoUsuario', 'Admin\UserCargoController@create');
+
+    //mostrar pedidos
     Route::get('mostrarPedidos', 'Admin\MostrarPedidoController@index');
+    
+    //extras
+    Route::get('getCargos', 'Admin\CargoController@obtener_cargo');
+    Route::get('get_tipo_plato', 'Admin\PlatosController@get_tipo_platos');
+    
 });
+

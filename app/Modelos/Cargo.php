@@ -12,4 +12,6 @@ class Cargo extends Model
     protected $fillable = [
         'nombre', 'sueldo', 'descripcion'
     ];
+    public $timestamps=false;
+
 }

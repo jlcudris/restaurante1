@@ -13,4 +13,6 @@ class Trabajador extends Model
         'nombre', 'apellido_paterno', 'apellido_materno', 'cedula', 'sexo', 'correo', 'telefono',
     ];
 
+    public $timestamps=false;
+
 }

@@ -11,4 +11,6 @@ class Mesa extends Model
     protected $fillable = [
         'num_mesa', 'tipo_mesa'
     ];
+    public $timestamps=false;
+
 }

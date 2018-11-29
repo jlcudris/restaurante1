@@ -15,4 +15,5 @@ class Mesa extends Model
     protected $fillable = [
         'nombre_promocion', 'valor_promocion','rutaimagen','descripcion_pro','fecha_creacion','fecha_promo','fin_fecha_promo','estado'
     ];
+    
 }

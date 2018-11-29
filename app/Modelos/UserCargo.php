@@ -12,4 +12,6 @@ class UserCargo extends Model
     protected $fillable = [
         'id_trabajador', 'id_cargo', 'observaciones'
     ];
+    public $timestamps=false;
+
 }
