@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2018 a las 01:42:25
+-- Tiempo de generación: 30-11-2018 a las 02:20:02
 -- Versión del servidor: 10.1.34-MariaDB
 -- Versión de PHP: 7.2.7
 
@@ -34,6 +34,13 @@ CREATE TABLE `cargo` (
   `sueldo` int(11) NOT NULL,
   `descripcion` varchar(502) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `cargo`
+--
+
+INSERT INTO `cargo` (`id_cargo`, `nombre`, `sueldo`, `descripcion`) VALUES
+(1, 'Administrador', 1400000, 'gffghfgh');
 
 -- --------------------------------------------------------
 
@@ -79,7 +86,7 @@ CREATE TABLE `detallespedidos_platos` (
 
 INSERT INTO `detallespedidos_platos` (`id_`, `id_pedido`, `id_plato`, `cantidad`) VALUES
 (1, 1, 3, 1),
-(2, 2, 3, 1);
+(3, 3, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -112,7 +119,9 @@ CREATE TABLE `mesas` (
 --
 
 INSERT INTO `mesas` (`id`, `num_mesa`, `tipo_mesa`) VALUES
-(1, 2, 1);
+(1, 2, 1),
+(2, 10, 1),
+(3, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -163,7 +172,8 @@ CREATE TABLE `oauth_access_tokens` (
 
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('78f4fd3d179d0789bd69951c4613cfc9fff89b9566fdb1c5d6eee4d581e1a386fb790dd63fb4f3d6', 1, 1, NULL, '[\"*\"]', 0, '2018-11-11 22:55:49', '2018-11-11 22:55:49', '2019-11-11 22:55:49'),
-('8a4a181d59362851ac31e7b167799ef31d6dd33d8c0ba2fec977d3c8b370c7d6516c906adae3b5da', 1, 1, NULL, '[\"*\"]', 0, '2018-11-11 23:00:25', '2018-11-11 23:00:25', '2019-11-11 23:00:25');
+('8a4a181d59362851ac31e7b167799ef31d6dd33d8c0ba2fec977d3c8b370c7d6516c906adae3b5da', 1, 1, NULL, '[\"*\"]', 0, '2018-11-11 23:00:25', '2018-11-11 23:00:25', '2019-11-11 23:00:25'),
+('91dd06ad7526cad78451fb3c0d72130bf07645c2e6eb59e95dad525acc6180af343c9f8058b32c97', 1, 1, NULL, '[\"*\"]', 0, '2018-11-30 00:59:28', '2018-11-30 00:59:28', '2019-11-29 19:59:28');
 
 -- --------------------------------------------------------
 
@@ -238,6 +248,7 @@ CREATE TABLE `oauth_refresh_tokens` (
 
 INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires_at`) VALUES
 ('50e0e2aaf3a6df639371b963f62f80a54cde70ffe2f74b38671568bad6610f0b2e4c3b0cd92f1d8e', '8a4a181d59362851ac31e7b167799ef31d6dd33d8c0ba2fec977d3c8b370c7d6516c906adae3b5da', 0, '2019-11-11 23:00:25'),
+('575427edbcd51a0bd55584e0e9790fa5a17e128dd921e5c20e558d370356891185e12ec003b56c33', '91dd06ad7526cad78451fb3c0d72130bf07645c2e6eb59e95dad525acc6180af343c9f8058b32c97', 0, '2019-11-29 19:59:29'),
 ('f9477a65597cb430d6f97631bcadef6a8dfacfc8f465bb8f797df181dd621272621919135bb2f529', '78f4fd3d179d0789bd69951c4613cfc9fff89b9566fdb1c5d6eee4d581e1a386fb790dd63fb4f3d6', 0, '2019-11-11 22:55:49');
 
 -- --------------------------------------------------------
@@ -298,7 +309,7 @@ CREATE TABLE `pedido` (
 
 INSERT INTO `pedido` (`id_pedido`, `nombre_cliente`, `id_mesa`, `fecha_pedido`, `hora_pedido`, `estado`) VALUES
 (1, 'edwin', 1, '2018-11-29', '22:01:54', 'pendiente'),
-(2, 'edwin', 1, '2018-11-29', '22:06:08', 'cancelado');
+(3, 'Erick', 2, '2018-11-29', '09:00:00', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -382,8 +393,8 @@ CREATE TABLE `trabajadores` (
   `apellido_materno` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `cedula` int(11) NOT NULL,
   `sexo` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `correo` int(11) NOT NULL,
-  `telefono` int(11) NOT NULL
+  `correo` varchar(75) COLLATE utf8_unicode_ci NOT NULL,
+  `telefono` varchar(15) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -391,7 +402,7 @@ CREATE TABLE `trabajadores` (
 --
 
 INSERT INTO `trabajadores` (`id_trabajador`, `nombre`, `apellido_paterno`, `apellido_materno`, `cedula`, `sexo`, `correo`, `telefono`) VALUES
-(1, 'prueba', 'pruebita', 'prubo', 111, 'm', 4544, 4422);
+(1, 'prueba', 'pruebita', 'prubo', 111, 'm', 'jhona@gmail.com', '4422');
 
 -- --------------------------------------------------------
 
@@ -449,6 +460,13 @@ CREATE TABLE `user_cargo` (
   `id_cargo` int(11) NOT NULL,
   `observaciones` varchar(300) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `user_cargo`
+--
+
+INSERT INTO `user_cargo` (`id_user_cargo`, `id_trabajador`, `id_cargo`, `observaciones`) VALUES
+(1, 1, 1, 'dsfsd');
 
 -- --------------------------------------------------------
 
@@ -635,7 +653,7 @@ ALTER TABLE `user_turnos`
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
-  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `cocinero_plato`
@@ -653,7 +671,7 @@ ALTER TABLE `detallespedidos_ofertas`
 -- AUTO_INCREMENT de la tabla `detallespedidos_platos`
 --
 ALTER TABLE `detallespedidos_platos`
-  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
@@ -665,7 +683,7 @@ ALTER TABLE `factura`
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -695,7 +713,7 @@ ALTER TABLE `oferta_dia`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido_oferta`
@@ -737,7 +755,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `user_cargo`
 --
 ALTER TABLE `user_cargo`
-  MODIFY `id_user_cargo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `user_turnos`
