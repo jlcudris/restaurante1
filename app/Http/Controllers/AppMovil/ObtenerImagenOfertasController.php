@@ -20,14 +20,15 @@ class ObtenerImagenOfertasController extends Controller
        
        // validar que la ruta exista  pendinete 
     foreach($oferta_dia as $item){
-        $img = public_path()."/img/".$item->rutaimagen;
+
+        $img = public_path()."/img/ofertas/".$item->rutaimagen;
         $type = pathinfo($img, PATHINFO_EXTENSION);
         $code = file_get_contents($img);
          $item->b64 = 'data:image/'.$type.';base64,'.base64_encode($code);
     }
-        //return response()->json($oferta_dia->rutaimagen);
+        
         return response()->json(["ofertas"=>$oferta_dia]);
-    //   //$pathTofile=storage_path()."/img/".$oferta_dia->rut
+    
        
        
     }
