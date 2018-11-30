@@ -16,9 +16,13 @@ use Illuminate\Http\Request;
 Route::post('register', 'Api\Auth\RegisterController@register');
 Route::post('login', 'Api\Auth\LoginController@login');
 
-Route::get('obetenerOfertas','AppMovil\ObtenerImagenOfertasController@obtenerOfertas');
+Route::get('obtenerOfertas','AppMovil\ObtenerImagenOfertasController@obtenerOfertas');
 Route::get('obetenerPlatos/{id}','AppMovil\ObtenerImagenOfertasController@obtenerTipoPlatos');
 Route::post('RegistrarPedidos','AppMovil\ObtenerPedidosController@obtenerPedidos');
+Route::post('cancelarPedidos','AppMovil\ObtenerPedidosController@cancelarPedido');
+Route::post('RegistrarPedidosOfertas','AppMovil\ObtenerPedidosController@obtenerPedidosOfertas');
+Route::post('cancelarPedidosOfertas','AppMovil\ObtenerPedidosController@cancelarPedidoOfeerta');
+
 
 
 
