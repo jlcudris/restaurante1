@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2018 a las 17:41:30
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.2.10
+-- Tiempo de generación: 30-11-2018 a las 01:42:25
+-- Versión del servidor: 10.1.34-MariaDB
+-- Versión de PHP: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -50,6 +50,19 @@ CREATE TABLE `cocinero_plato` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `detallespedidos_ofertas`
+--
+
+CREATE TABLE `detallespedidos_ofertas` (
+  `id_p_ofertas` int(11) NOT NULL,
+  `idpedido_oferta` int(11) NOT NULL,
+  `id_oferta` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `detallespedidos_platos`
 --
 
@@ -65,8 +78,8 @@ CREATE TABLE `detallespedidos_platos` (
 --
 
 INSERT INTO `detallespedidos_platos` (`id_`, `id_pedido`, `id_plato`, `cantidad`) VALUES
-(7, 5, 1, 2),
-(8, 5, 2, 2);
+(1, 1, 3, 1),
+(2, 2, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -284,7 +297,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`id_pedido`, `nombre_cliente`, `id_mesa`, `fecha_pedido`, `hora_pedido`, `estado`) VALUES
-(5, 'pepe', 1, '2018-11-24', '11:34:44', 'pendiente');
+(1, 'edwin', 1, '2018-11-29', '22:01:54', 'pendiente'),
+(2, 'edwin', 1, '2018-11-29', '22:06:08', 'cancelado');
 
 -- --------------------------------------------------------
 
@@ -294,13 +308,18 @@ INSERT INTO `pedido` (`id_pedido`, `nombre_cliente`, `id_mesa`, `fecha_pedido`, 
 
 CREATE TABLE `pedido_oferta` (
   `id_pedido_oferta` int(11) NOT NULL,
-  `id_oferta_p` int(11) NOT NULL,
   `id_mesa` int(11) NOT NULL,
   `nombre_cliente` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `valor_total` double(6,3) NOT NULL,
-  `fecha_venta` datetime NOT NULL
+  `fecha_venta` datetime NOT NULL,
+  `estado` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `pedido_oferta`
+--
+
+INSERT INTO `pedido_oferta` (`id_pedido_oferta`, `id_mesa`, `nombre_cliente`, `fecha_venta`, `estado`) VALUES
+(3, 1, 'lana', '2018-11-28 22:18:49', 'cancelado');
 
 -- --------------------------------------------------------
 
@@ -322,8 +341,9 @@ CREATE TABLE `platos` (
 --
 
 INSERT INTO `platos` (`id_plato`, `id_tipo_plato`, `nombre`, `precio`, `imagenplato`, `descripcion`) VALUES
-(1, 2, 'pizza champiñon', 10000, 'pizzachampiñon.jpg', 'las pizza tiene piña jamon y salsa agridulce con queso mozarela'),
-(2, 1, 'sopa lenteja', 1000, 'sopa.jpg', 'las sopas ricas');
+(3, 1, 'Pizza Perro', 5000, 'pizzaperro.jpg', 'Deliciosa pizza de perro :v'),
+(4, 1, 'Queso y pepperoni', 9000, 'queso.jpg', 'deliciosa pizza de Queso y pepperoni'),
+(5, 1, 'Hawaiana', 8000, 'hawaina.jpg', 'Deliciosa pizza Hawaina :v');
 
 -- --------------------------------------------------------
 
@@ -342,8 +362,12 @@ CREATE TABLE `tipo_platos` (
 --
 
 INSERT INTO `tipo_platos` (`id`, `nombre`, `descripcion`) VALUES
-(1, 'hgh', 'jgj'),
-(2, 'pizzas', 'las pizzas mas ricas del mundo');
+(1, 'Pizzas', 'Pizza Mas ricas'),
+(2, 'Corteliria', 'Corteliria en vasso :V'),
+(3, 'Sopas', 'las mejores sopas'),
+(4, 'Cervezas', 'las mejores Cervezas'),
+(5, 'Comidas Rapidas', 'las mejores Rapidas'),
+(6, 'Almuerzos', 'las mejores Almuerzos');
 
 -- --------------------------------------------------------
 
@@ -457,6 +481,14 @@ ALTER TABLE `cocinero_plato`
   ADD KEY `id_plato` (`id_plato`);
 
 --
+-- Indices de la tabla `detallespedidos_ofertas`
+--
+ALTER TABLE `detallespedidos_ofertas`
+  ADD PRIMARY KEY (`id_p_ofertas`),
+  ADD KEY `idpedido_oferta` (`idpedido_oferta`),
+  ADD KEY `id_oferta` (`id_oferta`);
+
+--
 -- Indices de la tabla `detallespedidos_platos`
 --
 ALTER TABLE `detallespedidos_platos`
@@ -544,7 +576,6 @@ ALTER TABLE `pedido`
 --
 ALTER TABLE `pedido_oferta`
   ADD PRIMARY KEY (`id_pedido_oferta`),
-  ADD KEY `id_oferta_p` (`id_oferta_p`),
   ADD KEY `id_mesa` (`id_mesa`);
 
 --
@@ -613,10 +644,16 @@ ALTER TABLE `cocinero_plato`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `detallespedidos_ofertas`
+--
+ALTER TABLE `detallespedidos_ofertas`
+  MODIFY `id_p_ofertas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `detallespedidos_platos`
 --
 ALTER TABLE `detallespedidos_platos`
-  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
@@ -658,25 +695,25 @@ ALTER TABLE `oferta_dia`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido_oferta`
 --
 ALTER TABLE `pedido_oferta`
-  MODIFY `id_pedido_oferta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pedido_oferta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `platos`
 --
 ALTER TABLE `platos`
-  MODIFY `id_plato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_plato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_platos`
 --
 ALTER TABLE `tipo_platos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `trabajadores`
@@ -720,6 +757,13 @@ ALTER TABLE `cocinero_plato`
   ADD CONSTRAINT `cocinero_plato_ibfk_2` FOREIGN KEY (`id_plato`) REFERENCES `platos` (`id_plato`);
 
 --
+-- Filtros para la tabla `detallespedidos_ofertas`
+--
+ALTER TABLE `detallespedidos_ofertas`
+  ADD CONSTRAINT `detallespedidos_ofertas_ibfk_1` FOREIGN KEY (`idpedido_oferta`) REFERENCES `pedido_oferta` (`id_pedido_oferta`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `detallespedidos_ofertas_ibfk_2` FOREIGN KEY (`id_oferta`) REFERENCES `oferta_dia` (`id_promociones`);
+
+--
 -- Filtros para la tabla `detallespedidos_platos`
 --
 ALTER TABLE `detallespedidos_platos`
@@ -737,7 +781,6 @@ ALTER TABLE `pedido`
 -- Filtros para la tabla `pedido_oferta`
 --
 ALTER TABLE `pedido_oferta`
-  ADD CONSTRAINT `pedido_oferta_ibfk_1` FOREIGN KEY (`id_oferta_p`) REFERENCES `oferta_dia` (`id_promociones`),
   ADD CONSTRAINT `pedido_oferta_ibfk_2` FOREIGN KEY (`id_mesa`) REFERENCES `mesas` (`id`);
 
 --
