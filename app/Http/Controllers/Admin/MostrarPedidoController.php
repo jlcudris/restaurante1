@@ -22,7 +22,7 @@ class MostrarPedidoController extends Controller
         $pedidos_arr = array();
         foreach($pedidos as $pedido){
             $lista_pedido = DB::table('detallespedidos_platos as dp')
-            ->select('pl.nombre', 'pl.imagenplato', 'pe.nombre_cliente', 'pe.fecha_pedido', 'pe.hora_pedido', 'pe.estado', 'dp.cantidad')
+            ->select('dp.id_pedido', 'pl.id_plato', 'pl.nombre', 'pl.imagenplato', 'pe.nombre_cliente', 'pe.fecha_pedido', 'pe.hora_pedido', 'pe.estado', 'dp.cantidad')
             ->join('platos as pl', 'dp.id_plato','pl.id_plato')
             ->join('pedido as pe', 'dp.id_pedido','pe.id_pedido')
             ->where('dp.id_pedido',$pedido->id_pedido)
