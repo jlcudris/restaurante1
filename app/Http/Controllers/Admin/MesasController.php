@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modelos\Mesa;
+use Illuminate\Support\Facades\DB;
+
 
 class MesasController extends Controller
 {
@@ -27,5 +29,14 @@ class MesasController extends Controller
         return response()->json( ['message' => 'Mesa creada con exito'],201 );
         }
         return response()->json( ['message' => 'Error al crear mesa'],400 );
+    }
+
+    public function get_mesa()
+    {
+        $mesas = DB::table('mesas as m')
+        ->select('m.id', 'm.num_mesa', 'm.tipo_mesa')
+        ->get();
+
+        return response()->json(['Mesas' => $mesas]);
     }
 }

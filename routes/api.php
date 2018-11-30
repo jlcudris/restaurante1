@@ -38,6 +38,7 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     
     //extras
     Route::get('getCargos', 'Admin\CargoController@obtener_cargo');
+    Route::get('getMesas', 'Admin\MesasController@get_mesa');
     Route::get('get_tipo_plato', 'Admin\PlatosController@get_tipo_platos');
     
 });
