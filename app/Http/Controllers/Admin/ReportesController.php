@@ -44,21 +44,22 @@ class ReportesController extends Controller
     public function dia(){
 
 
-        $pedidoss = DB::table('pedido as pe')
+        /*$pedidoss = DB::table('pedido as pe')
         ->select( DB::raw('dp.cantidad*pl.precio as total_venta'),'pe.nombre_cliente','pe.id_mesa','pe.fecha_pedido','pe.hora_pedido','pe.estado','pl.nombre','pl.precio','dp.cantidad')
         ->join('detallespedidos_platos as dp','pe.id_pedido','=',"dp.id_pedido")
         ->join('platos as pl','dp.id_plato','=','pl.id_plato')
         ->where('pe.fecha_pedido', date('Y-m-d'))
-        ->get();
-
-
-        /*$platomasVendido=DB::table('detallespedidos_platos as dp')
-        ->select( DB::raw('sum(dp.cantidad)  as vendido_mas'),'pl.nombre','dp.cantidad')
-        ->join('platos as pl','dp.id_plato','pl.id_plato')
-        ->join('pedido as pe','pe.id_pedido','=',"dp.id_pedido")
-        ->where('pe.fecha_pedido', date('Y-m-d'))
-        ->groupBy('pl.nombre','dp.cantidad')
         ->get();*/
+
+        $pedidos=DB::table('pedido as pe')
+                    ->select(DB::raw('sum(pl.precio*dp.cantidad) as price'),DB::raw('sum(dp.cantidad) as cantidad'),'pl.nombre','pl.id_plato','pl.precio as precio_cantidad')
+                    ->join('detallespedidos_platos as dp','dp.id_pedido','=','pe.id_pedido')
+                    ->join('platos as pl','pl.id_plato','=','dp.id_plato')
+                    ->groupby('pl.id_plato','pl.nombre','pl.precio')
+                    ->get();
+
+
+       
 
         $platomasVendido=DB::table('platos as p')
                              ->select(DB::raw('sum(dp.cantidad) as cantidad_max'),'p.nombre')
@@ -71,7 +72,7 @@ class ReportesController extends Controller
 
 
         
-        return response()->json(['platos_vendidos' => $pedidoss,'plato ams vendido'=>$platomasVendido]);
+        return response()->json(['platos_vendidos' => $pedidos,'plato ams vendido'=>$platomasVendido]);
     }
 
 }
