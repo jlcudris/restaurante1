@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modelos\Cargo;
+use Illuminate\Support\Facades\DB;
 
 class CargoController extends Controller
 {
@@ -28,5 +30,14 @@ class CargoController extends Controller
         return response()->json( ['message' => 'Cargo creado con exito'],201 );
         }
         return response()->json( ['message' => 'Error al registrar'],500 );
+    }
+
+    public function obtener_cargo()
+    {
+        $cargos = DB::table('cargo as c')
+        ->select('c.id_cargo', 'c.nombre')
+        ->get();
+
+        return response()->json(['cargo' => $cargos]);
     }
 }

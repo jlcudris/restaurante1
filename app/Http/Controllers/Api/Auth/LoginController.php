@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use Laravel\Passport\Client;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 class LoginController extends Controller
@@ -55,5 +56,14 @@ class LoginController extends Controller
         //return response()->json( $datos=['datos'] );
 
         }
+    }
+
+    public function logout()
+    {
+        $accessToken = Auth::user()->token();
+
+        DB::table('oauth_access_tokens')->where('user_id', Auth::id())->delete();
+  
+        return response()->json(['message' => 'La sesion a sido cerrada con exito'], 200);
     }
 }
