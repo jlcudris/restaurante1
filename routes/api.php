@@ -32,6 +32,8 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('tipo_plato', 'Admin\PlatosController@create_tipo_plato');
     Route::post('logout', 'Api\Auth\LoginController@logout');
     Route::post('CargoUsuario', 'Admin\UserCargoController@create');
+    Route::post('factura', 'Admin\FacturaController@create');
+    Route::post('get_factura', 'Admin\FacturaController@get_factura');
 
     //mostrar pedidos
     Route::get('mostrarPedidos', 'Admin\MostrarPedidoController@index');
