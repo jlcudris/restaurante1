@@ -28,7 +28,7 @@ class MostrarPedidoController extends Controller
             ->where('dp.id_pedido',$pedido->id_pedido)
             ->get();
 
-            $pedidos_arr = array_add($pedidos_arr, 'mesa '.$pedido->num_mesa, $lista_pedido);
+            $pedidos_arr = array_add($pedidos_arr, 'mesa'.$pedido->num_mesa, $lista_pedido);
         }
         
         return response()->json($pedidos_arr);
