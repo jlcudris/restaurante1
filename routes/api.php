@@ -14,15 +14,16 @@ use Illuminate\Http\Request;
 */
 Route::group(['middleware' => 'Cors'], function () {
     
-Route::post('login', 'Api\Auth\LoginController@login');
-
-Route::get('obtenerOfertas','AppMovil\ObtenerImagenOfertasController@obtenerOfertas');
-Route::get('obetenerPlatos/{id}','AppMovil\ObtenerImagenOfertasController@obtenerTipoPlatos');
-Route::post('RegistrarPedidos','AppMovil\ObtenerPedidosController@obtenerPedidos');
-Route::post('cancelarPedidos','AppMovil\ObtenerPedidosController@cancelarPedido');
-Route::post('RegistrarPedidosOfertas','AppMovil\ObtenerPedidosController@obtenerPedidosOfertas');
-Route::post('cancelarPedidosOfertas','AppMovil\ObtenerPedidosController@cancelarPedidoOfeerta');
-
+    Route::post('login', 'Api\Auth\LoginController@login');
+    
+    Route::get('obtenerOfertas','AppMovil\ObtenerImagenOfertasController@obtenerOfertas');
+    Route::get('obetenerPlatos/{id}','AppMovil\ObtenerImagenOfertasController@obtenerTipoPlatos');
+    Route::post('RegistrarPedidos','AppMovil\ObtenerPedidosController@obtenerPedidos');
+    Route::post('cancelarPedidos','AppMovil\ObtenerPedidosController@cancelarPedido');
+    Route::post('RegistrarPedidosOfertas','AppMovil\ObtenerPedidosController@obtenerPedidosOfertas');
+    Route::post('cancelarPedidosOfertas','AppMovil\ObtenerPedidosController@cancelarPedidoOfeerta');
+    
+    Route::get('getMesas', 'Admin\MesasController@get_mesa');
 
 Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('register', 'Api\Auth\RegisterController@register');
@@ -41,7 +42,6 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     
     //extras
     Route::get('getCargos', 'Admin\CargoController@obtener_cargo');
-    Route::get('getMesas', 'Admin\MesasController@get_mesa');
     Route::get('get_tipo_plato', 'Admin\PlatosController@get_tipo_platos');
     Route::get('get_reporte', 'Admin\ReportesController@dia');
     
