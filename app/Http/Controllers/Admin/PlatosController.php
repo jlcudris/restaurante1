@@ -33,21 +33,20 @@ class PlatosController extends Controller
                 }
             }
             if($can){
-                if($request->hasFile('imagenplato')){
-                    return $name;exit;
-                    $file = $request->file('imagenplato');
-                    $name = time().$file->getClientOriginalName();
-                    $file->move(public_path().'/img/platos/', $name);
+                return response()->json($request->file('imagenplato'),402);exit;
+                if($request->file('imagenplato')){
+                    $path = Storage::disk('public')->put('img/platos', $request->file('file'));
+                    $name = $request->file('imagenplato')->getClientOriginalName();
                     $plato = Plato::create([
                         'id_tipo_plato' => request('id_tipo_plato'),
                         'nombre' => request('nombre'),
                         'precio' => request('precio'),
-                        'imagenplato' => $name,
+                        'imagenplato' => time().$name,
                         'descripcion' => request('descripcion'),
                     ]);
                     return response()->json( ['message' => 'Plato creado con exito'],201 );
                 }else{
-                    return response()->json( ['message' => 'Imagen no valida'],401 );   
+                    return response()->json( ['message' => 'Imagen no valida'],401 );
                 }
             }else{
                 return response()->json( ['message' => 'Tipo plato no encontrado'],401 );

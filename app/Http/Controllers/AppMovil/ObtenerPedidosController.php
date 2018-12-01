@@ -95,7 +95,7 @@ class ObtenerPedidosController extends Controller
 
             $cancelarP=DB::table('pedido')
             ->where('id_pedido', request('id_pedido'))
-            ->update(['estado' => 'cancelado']);
+            ->delete();
 
             $borrardetalle_pedido=DB::table('detallespedidos_platos')
             ->where('id_pedido',request('id_pedido'))
