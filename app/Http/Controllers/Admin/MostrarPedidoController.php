@@ -12,10 +12,10 @@ class MostrarPedidoController extends Controller
     {
         //iterar todos los pedidos que estan pendiente y listarlos por fecha 
         $pedidos = DB::table('pedido as pe')
-        ->where('pe.estado','pendiente')
         ->join('mesas as me', 'pe.id_mesa','me.id')
         ->where('pe.fecha_pedido',date('Y-m-d'))
-        ->orderBy('pe.hora_pedido', 'asc')
+        ->where('pe.estado','pendiente')
+        ->orderBy('pe.hora_pedido', 'desc')
         ->get();
 
 
@@ -31,6 +31,10 @@ class MostrarPedidoController extends Controller
             $pedidos_arr = array_add($pedidos_arr, 'mesa'.$pedido->num_mesa, $lista_pedido);
         }
         
-        return response()->json($pedidos_arr);
+        if(count($pedidos_arr) > 0){
+            return response()->json(['code' => 1,$pedidos_arr],201);
+        }else{
+            return response()->json(['code' => '0'],401);
+        }
     }
 }
