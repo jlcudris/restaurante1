@@ -8,6 +8,7 @@ use App\Modelos\Plato;
 use App\Modelos\Tipo_Plato;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
 
 class PlatosController extends Controller
 {
@@ -19,25 +20,25 @@ class PlatosController extends Controller
             'precio' => 'required',
             'imagenplato' => 'required',
             'descripcion' => 'required'
-
-        ]);
-        if($validator->fails()){
-          //return response()->json(['errors'=>$validator->errors()->all()]);
-          // return response()->json( $datos='nO ' );
-          return response()->json( $errors=$validator->errors()->all(),200 );
-        }else{
-            $can = 0;
-            $tipo = DB::table('tipo_platos')->get();
-            foreach($tipo as $tip){
-                if($tip->id == request('id_tipo_plato')){
-                    $can = 1;
+            
+            ]);
+            if($validator->fails()){
+                //return response()->json(['errors'=>$validator->errors()->all()]);
+                // return response()->json( $datos='nO ' );
+                return response()->json( $errors=$validator->errors()->all(),200 );
+            }else{
+                $can = 0;
+                $tipo = DB::table('tipo_platos')->get();
+                foreach($tipo as $tip){
+                    if($tip->id == request('id_tipo_plato')){
+                        $can = 1;
+                    }
                 }
-            }
-            if($can){
-                return response()->json($request->file('file'));exit;
+                if($can){
                 if($request->file('imagenplato')){
-                    $path = Storage::disk('public')->put('img', $request->file('imagenplato'));
-                    $name = $request->file('imagenplato')->getClientOriginalName();
+                    $file = $request->file('imagenplato');
+                    $name = $file->getClientOriginalName();
+                    $file->move(public_path().'/img/platos/',time().$name);
                     $plato = Plato::create([
                         'id_tipo_plato' => request('id_tipo_plato'),
                         'nombre' => request('nombre'),
