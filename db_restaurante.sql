@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2018 a las 02:20:02
--- Versión del servidor: 10.1.34-MariaDB
--- Versión de PHP: 7.2.7
+-- Tiempo de generación: 01-12-2018 a las 06:30:59
+-- Versión del servidor: 10.1.26-MariaDB
+-- Versión de PHP: 7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -85,8 +85,10 @@ CREATE TABLE `detallespedidos_platos` (
 --
 
 INSERT INTO `detallespedidos_platos` (`id_`, `id_pedido`, `id_plato`, `cantidad`) VALUES
-(1, 1, 3, 1),
-(3, 3, 3, 2);
+(1, 1, 5, 1),
+(3, 3, 4, 2),
+(4, 1, 5, 2),
+(5, 4, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -99,8 +101,17 @@ CREATE TABLE `factura` (
   `id_pedido` int(11) NOT NULL,
   `codigo` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
-  `valor_total` int(11) NOT NULL
+  `valor_total` int(11) NOT NULL,
+  `id_mesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `factura`
+--
+
+INSERT INTO `factura` (`id_factura`, `id_pedido`, `codigo`, `fecha`, `valor_total`, `id_mesa`) VALUES
+(1, 1, 112233, '2018-11-30 00:00:00', 21000, 1),
+(2, 3, 32654, '2018-11-30 00:00:00', 18000, 2);
 
 -- --------------------------------------------------------
 
@@ -121,7 +132,7 @@ CREATE TABLE `mesas` (
 INSERT INTO `mesas` (`id`, `num_mesa`, `tipo_mesa`) VALUES
 (1, 2, 1),
 (2, 10, 1),
-(3, 2, 3);
+(3, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -171,9 +182,11 @@ CREATE TABLE `oauth_access_tokens` (
 --
 
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('33acad3c3e08e3257fc6bb93445bebd07bc485cf9d706bbbc5b9818c507ecc4e79c9ee26b334de16', 1, 1, NULL, '[\"*\"]', 0, '2018-11-30 04:51:53', '2018-11-30 04:51:53', '2019-11-29 23:51:53'),
 ('78f4fd3d179d0789bd69951c4613cfc9fff89b9566fdb1c5d6eee4d581e1a386fb790dd63fb4f3d6', 1, 1, NULL, '[\"*\"]', 0, '2018-11-11 22:55:49', '2018-11-11 22:55:49', '2019-11-11 22:55:49'),
 ('8a4a181d59362851ac31e7b167799ef31d6dd33d8c0ba2fec977d3c8b370c7d6516c906adae3b5da', 1, 1, NULL, '[\"*\"]', 0, '2018-11-11 23:00:25', '2018-11-11 23:00:25', '2019-11-11 23:00:25'),
-('91dd06ad7526cad78451fb3c0d72130bf07645c2e6eb59e95dad525acc6180af343c9f8058b32c97', 1, 1, NULL, '[\"*\"]', 0, '2018-11-30 00:59:28', '2018-11-30 00:59:28', '2019-11-29 19:59:28');
+('91dd06ad7526cad78451fb3c0d72130bf07645c2e6eb59e95dad525acc6180af343c9f8058b32c97', 1, 1, NULL, '[\"*\"]', 0, '2018-11-30 00:59:28', '2018-11-30 00:59:28', '2019-11-29 19:59:28'),
+('ed87a62d1e22e7e2a98b55035ee8c5a192469335045f599d5d64aa095ba78ba7c7354bd6c6d559ce', 1, 1, NULL, '[\"*\"]', 0, '2018-12-01 04:50:00', '2018-12-01 04:50:00', '2019-11-30 23:50:00');
 
 -- --------------------------------------------------------
 
@@ -249,6 +262,8 @@ CREATE TABLE `oauth_refresh_tokens` (
 INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires_at`) VALUES
 ('50e0e2aaf3a6df639371b963f62f80a54cde70ffe2f74b38671568bad6610f0b2e4c3b0cd92f1d8e', '8a4a181d59362851ac31e7b167799ef31d6dd33d8c0ba2fec977d3c8b370c7d6516c906adae3b5da', 0, '2019-11-11 23:00:25'),
 ('575427edbcd51a0bd55584e0e9790fa5a17e128dd921e5c20e558d370356891185e12ec003b56c33', '91dd06ad7526cad78451fb3c0d72130bf07645c2e6eb59e95dad525acc6180af343c9f8058b32c97', 0, '2019-11-29 19:59:29'),
+('894ea2cbea29b7e41661723b4c193d512a96f6e940f249f70eefb278131861bcbbbafc2a4dd9574f', 'ed87a62d1e22e7e2a98b55035ee8c5a192469335045f599d5d64aa095ba78ba7c7354bd6c6d559ce', 0, '2019-11-30 23:50:01'),
+('cd2e3efdfe3b2c6799cc4c12d745ddacde2bbfe11fd8d7ef0a668d41e4b934edd717a921da65cad3', '33acad3c3e08e3257fc6bb93445bebd07bc485cf9d706bbbc5b9818c507ecc4e79c9ee26b334de16', 0, '2019-11-29 23:51:54'),
 ('f9477a65597cb430d6f97631bcadef6a8dfacfc8f465bb8f797df181dd621272621919135bb2f529', '78f4fd3d179d0789bd69951c4613cfc9fff89b9566fdb1c5d6eee4d581e1a386fb790dd63fb4f3d6', 0, '2019-11-11 22:55:49');
 
 -- --------------------------------------------------------
@@ -308,8 +323,9 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`id_pedido`, `nombre_cliente`, `id_mesa`, `fecha_pedido`, `hora_pedido`, `estado`) VALUES
-(1, 'edwin', 1, '2018-11-29', '22:01:54', 'pendiente'),
-(3, 'Erick', 2, '2018-11-29', '09:00:00', 'pendiente');
+(1, 'edwin', 1, '2018-12-01', '22:01:54', 'pendiente'),
+(3, 'Erick', 2, '2018-12-01', '09:00:00', 'pendiente'),
+(4, 'vhfgj', 3, '2018-12-01', '04:00:00', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -520,6 +536,7 @@ ALTER TABLE `detallespedidos_platos`
 ALTER TABLE `factura`
   ADD PRIMARY KEY (`id_factura`),
   ADD UNIQUE KEY `codigo` (`codigo`),
+  ADD UNIQUE KEY `id_pedido_2` (`id_pedido`),
   ADD KEY `id_pedido` (`id_pedido`);
 
 --
@@ -654,115 +671,96 @@ ALTER TABLE `user_turnos`
 --
 ALTER TABLE `cargo`
   MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `cocinero_plato`
 --
 ALTER TABLE `cocinero_plato`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `detallespedidos_ofertas`
 --
 ALTER TABLE `detallespedidos_ofertas`
-  MODIFY `id_p_ofertas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `id_p_ofertas` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `detallespedidos_platos`
 --
 ALTER TABLE `detallespedidos_platos`
-  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `id_` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT de la tabla `oauth_clients`
 --
 ALTER TABLE `oauth_clients`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `oauth_personal_access_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `oferta_dia`
 --
 ALTER TABLE `oferta_dia`
   MODIFY `id_promociones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `pedido_oferta`
 --
 ALTER TABLE `pedido_oferta`
   MODIFY `id_pedido_oferta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `platos`
 --
 ALTER TABLE `platos`
   MODIFY `id_plato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT de la tabla `tipo_platos`
 --
 ALTER TABLE `tipo_platos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT de la tabla `trabajadores`
 --
 ALTER TABLE `trabajadores`
   MODIFY `id_trabajador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `turno`
 --
 ALTER TABLE `turno`
   MODIFY `id_turno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `user_cargo`
 --
 ALTER TABLE `user_cargo`
   MODIFY `id_user_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT de la tabla `user_turnos`
 --
 ALTER TABLE `user_turnos`
   MODIFY `id_user_turnos` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- Restricciones para tablas volcadas
 --
