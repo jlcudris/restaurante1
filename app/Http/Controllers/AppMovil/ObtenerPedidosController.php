@@ -223,7 +223,7 @@ public function pedidoCamino(Request $request){
         }
 
         //aqui debes mirar
-        return response()->json(['estado' => $sw],201);
+        return response()->json(['code' => $sw],201);
     }
 
 }

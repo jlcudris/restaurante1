@@ -27,6 +27,8 @@ Route::group(['middleware' => 'Cors'], function () {
     Route::post('plato', 'Admin\PlatosController@create_plato');
     //estas son los 2 nuevas rutas
     Route::get('PedidoTerminado', 'Admin\MostrarPedidoController@aceptarPedido');
+    //perdido en camino
+    Route::get('Pedidoencamino', 'Admin\MostrarPedidoController@pedidoCamino');
     Route::get('mostrarPedidos', 'Admin\MostrarPedidoController@index');
 
 
