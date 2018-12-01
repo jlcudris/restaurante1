@@ -24,12 +24,12 @@ Route::post('RegistrarPedidosOfertas','AppMovil\ObtenerPedidosController@obtener
 Route::post('cancelarPedidosOfertas','AppMovil\ObtenerPedidosController@cancelarPedidoOfeerta');
 
 
+Route::post('plato', 'Admin\PlatosController@create_plato');
 Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('register', 'Api\Auth\RegisterController@register');
     Route::post('registerWorks', 'Admin\TrabajadoresController@create');
     Route::post('crearCargo', 'Admin\CargoController@create');
     Route::post('mesas', 'Admin\MesasController@create');
-    Route::post('plato', 'Admin\PlatosController@create_plato');
     Route::post('tipo_plato', 'Admin\PlatosController@create_tipo_plato');
     Route::post('logout', 'Api\Auth\LoginController@logout');
     Route::post('CargoUsuario', 'Admin\UserCargoController@create');

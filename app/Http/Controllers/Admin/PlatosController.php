@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Modelos\Plato;
 use App\Modelos\Tipo_Plato;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PlatosController extends Controller
 {
@@ -33,16 +34,15 @@ class PlatosController extends Controller
                 }
             }
             if($can){
-                if($request->hasFile('imagenplato')){
-                    return $name;exit;
-                    $file = $request->file('imagenplato');
-                    $name = time().$file->getClientOriginalName();
-                    $file->move(public_path().'/img/platos/', $name);
+                return response()->json($request->file('file'));exit;
+                if($request->file('imagenplato')){
+                    $path = Storage::disk('public')->put('img', $request->file('imagenplato'));
+                    $name = $request->file('imagenplato')->getClientOriginalName();
                     $plato = Plato::create([
                         'id_tipo_plato' => request('id_tipo_plato'),
                         'nombre' => request('nombre'),
                         'precio' => request('precio'),
-                        'imagenplato' => $name,
+                        'imagenplato' => time().$name,
                         'descripcion' => request('descripcion'),
                     ]);
                     return response()->json( ['message' => 'Plato creado con exito'],201 );
