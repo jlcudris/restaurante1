@@ -196,4 +196,36 @@ public function cancelarPedidoOfeerta(Request $request){
 
 }
 
+public function pedidoCamino(Request $request){
+
+    $validator=\Validator::make($request->all(),[
+        'id_pedido' => 'required|numeric'
+      
+    ]);
+    if($validator->fails()){
+      //return response()->json(['errors'=>$validator->errors()->all()]);
+      // return response()->json( $datos='nO ' );
+      return response()->json( $errors=$validator->errors()->all(),400);
+    }else{
+
+        $sw=0;
+        $terminado=DB::table('pedido')
+    
+        ->select('estado') 
+        ->where('id_pedido', request('id_pedido'))
+        ->first();
+
+        if($terminado->estado =='terminado'){
+
+            $sw=$sw+1;
+
+
+        }
+
+        //aqui debes mirar
+        return response()->json(['estado' => $sw],201);
+    }
+
+}
+
 }

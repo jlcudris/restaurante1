@@ -37,11 +37,14 @@ class PlatosController extends Controller
                 //     $file = $request->file('imagenplato');
                 //     $name = $file->getClientOriginalName();
                 //     $file->move(public_path().'/img/platos/',time().$name);
+
+                    // $img=request('imagenplato');
+                    
                     $plato = Plato::create([
                         'id_tipo_plato' => request('id_tipo_plato'),
                         'nombre' => request('nombre'),
                         'precio' => request('precio'),
-                        'imagenplato' => request('imagenplato'),
+                        'imageb64' => request('imagenplato'),
                         'descripcion' => request('descripcion'),
                     ]);
                     return response()->json( ['message' => 'Plato creado con exito'],201 );
@@ -87,10 +90,10 @@ class PlatosController extends Controller
 
     public function get_platos()
     {
-        $platos = DB::table('tipo_platos as tp')
-        ->select('tp.id', 'tp.nombre', 'tp.descripcion')
+        $platos = DB::table('plato')
+       
         ->get();
 
-        return response()->json(['tipo_plato' => $tipo_platos]);
+        return response()->json(['plato' => $platos]);
     }
 }

@@ -10,7 +10,7 @@ class Plato extends Model
     protected $primaryKey = 'id_plato';
 
     protected $fillable = [
-        'nombre', 'id_tipo_plato','precio', 'imagenplato', 'cedula', 'descripcion',
+        'nombre', 'id_tipo_plato','precio', 'cedula', 'descripcion','imageb64'
     ];
 
     public $timestamps=false;

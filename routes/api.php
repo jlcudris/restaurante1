@@ -24,13 +24,17 @@ Route::group(['middleware' => 'Cors'], function () {
     Route::post('cancelarPedidosOfertas','AppMovil\ObtenerPedidosController@cancelarPedidoOfeerta');
     
     Route::get('getMesas', 'Admin\MesasController@get_mesa');
+    Route::post('plato', 'Admin\PlatosController@create_plato');
+    //estas son los 2 nuevas rutas
+    Route::get('PedidoTerminado', 'Admin\MostrarPedidoController@aceptarPedido');
+    Route::get('mostrarPedidos', 'Admin\MostrarPedidoController@index');
+
 
 Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('register', 'Api\Auth\RegisterController@register');
     Route::post('registerWorks', 'Admin\TrabajadoresController@create');
     Route::post('crearCargo', 'Admin\CargoController@create');
     Route::post('mesas', 'Admin\MesasController@create');
-    Route::post('plato', 'Admin\PlatosController@create_plato');
     Route::post('tipo_plato', 'Admin\PlatosController@create_tipo_plato');
     Route::post('logout', 'Api\Auth\LoginController@logout');
     Route::post('CargoUsuario', 'Admin\UserCargoController@create');
@@ -38,7 +42,6 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('get_factura', 'Admin\FacturaController@get_factura');
 
     //mostrar pedidos
-    Route::get('mostrarPedidos', 'Admin\MostrarPedidoController@index');
     
     //extras
     Route::get('getCargos', 'Admin\CargoController@obtener_cargo');

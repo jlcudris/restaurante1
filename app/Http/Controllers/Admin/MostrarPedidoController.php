@@ -22,9 +22,10 @@ class MostrarPedidoController extends Controller
         $pedidos_arr = array();
         foreach($pedidos as $pedido){
             $lista_pedido = DB::table('detallespedidos_platos as dp')
-            ->select('dp.id_pedido', 'pl.id_plato', 'pl.nombre', 'pl.imagenplato', 'pe.nombre_cliente', 'pe.fecha_pedido', 'pe.hora_pedido', 'pe.estado', 'dp.cantidad')
+            ->select('dp.id_pedido', 'pl.id_plato', 'pl.nombre', 'pl.imageb64', 'pe.nombre_cliente', 'pe.fecha_pedido', 'pe.hora_pedido', 'pe.estado', 'dp.cantidad','ms.num_mesa')
             ->join('platos as pl', 'dp.id_plato','pl.id_plato')
             ->join('pedido as pe', 'dp.id_pedido','pe.id_pedido')
+            ->join('mesas as ms','pe.id_mesa','ms.id')
             ->where('dp.id_pedido',$pedido->id_pedido)
             ->get();
 
@@ -37,4 +38,31 @@ class MostrarPedidoController extends Controller
             return response()->json(['code' => '0'],401);
         }
     }
+
+    ///pedido terminado
+    public function aceptarPedido(Request $request){
+
+        $validator=\Validator::make($request->all(),[
+            'id_pedido' => 'required|numeric'
+          
+        ]);
+        if($validator->fails()){
+          //return response()->json(['errors'=>$validator->errors()->all()]);
+          // return response()->json( $datos='nO ' );
+          return response()->json( $errors=$validator->errors()->all(),400);
+        }else{
+
+            $terminado=DB::table('pedido')
+            ->where('id_pedido', request('id_pedido'))
+            ->update(['estado' => 'terminado']);
+
+            return response()->json(['sucess' => "pedido en camino"],201);
+        }
+
+       
+
+    }
+
+
+    
 }

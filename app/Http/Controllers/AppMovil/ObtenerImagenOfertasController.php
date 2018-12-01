@@ -39,15 +39,15 @@ class ObtenerImagenOfertasController extends Controller
 $tiposplato =DB::table('platos as p')
 ->join('tipo_platos as tp','p.id_tipo_plato','=','tp.id')
 ->where('tp.id','=', $id)
-->select('p.id_plato','p.nombre','p.precio','p.imagenplato','p.descripcion')->get();
+->select('p.id_plato','p.nombre','p.precio','p.imageb64','p.descripcion')->get();
 
 
-foreach($tiposplato as $platos){
-    $img = public_path()."/img/platos/".$platos->imagenplato;
-    $type = pathinfo($img, PATHINFO_EXTENSION);
-    $code = file_get_contents($img);
-     $platos->b64 = 'data:image/'.$type.';base64,'.base64_encode($code);
-}
+// foreach($tiposplato as $platos){
+//     $img = public_path()."/img/platos/".$platos->imagenplato;
+//     $type = pathinfo($img, PATHINFO_EXTENSION);
+//     $code = file_get_contents($img);
+//      $platos->b64 = 'data:image/'.$type.';base64,'.base64_encode($code);
+// }
     //return response()->json($oferta_dia->rutaimagen);
     return response()->json(["platos"=>$tiposplato]);
 
